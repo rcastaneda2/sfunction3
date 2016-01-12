@@ -1,14 +1,9 @@
 \name{linmod}
 \alias{linmod}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-%%  ~~function to do ... ~~
-Linear_Regression
-}
-\description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
-estimates linear regression
-}
+\alias{linmod.default}
+\alias{linmod.formula}
+\title{Linear_Regression}
+\description{fits regression model}
 \usage{
 linmod(x, ...)
 }
@@ -57,5 +52,5 @@ UseMethod("linmod")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~kwd1 }
+\keyword{Regression}
 \keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

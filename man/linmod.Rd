@@ -3,9 +3,11 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 %%  ~~function to do ... ~~
+Linear_Regression
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
+estimates linear regression
 }
 \usage{
 linmod(x, ...)

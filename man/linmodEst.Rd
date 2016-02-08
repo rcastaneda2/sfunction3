@@ -1,5 +1,5 @@
-\name{linmod}
-\alias{linmod}
+\name{linmodEst}
+\alias{linmodEst}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 %%  ~~function to do ... ~~
@@ -8,15 +8,15 @@
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-linmod(x, ...)
+linmodEst(x, y)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
 %%     ~~Describe \code{x} here~~
 }
-  \item{\dots}{
-%%     ~~Describe \code{\dots} here~~
+  \item{y}{
+%%     ~~Describe \code{y} here~~
 }
 }
 \details{
@@ -50,8 +50,17 @@ linmod(x, ...)
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function (x, ...) 
-UseMethod("linmod")
+function (x, y) 
+{
+    qx <- qr(x)
+    coef <- solve.qr(qx, y)
+    df <- nrow(x) - ncol(x)
+    sigma2 <- sum((y - x \%*\% coef)^2)/df
+    vcov <- sigma2 * chol2inv(qx$qr)
+    colnames(vcov) <- rownames(vcov) <- colnames(x)
+    list(coefficients = coef, vcov = vcov, sigma = sqrt(sigma2), 
+        df = df)
+  }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

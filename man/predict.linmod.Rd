@@ -1,5 +1,5 @@
-\name{linmod}
-\alias{linmod}
+\name{predict.linmod}
+\alias{predict.linmod}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 %%  ~~function to do ... ~~
@@ -8,12 +8,15 @@
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-linmod(x, ...)
+predict.linmod(object, newdata = NULL, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{
-%%     ~~Describe \code{x} here~~
+  \item{object}{
+%%     ~~Describe \code{object} here~~
+}
+  \item{newdata}{
+%%     ~~Describe \code{newdata} here~~
 }
   \item{\dots}{
 %%     ~~Describe \code{\dots} here~~
@@ -50,8 +53,21 @@ linmod(x, ...)
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function (x, ...) 
-UseMethod("linmod")
+function (object, newdata = NULL, ...) 
+{
+    if (is.null(newdata)) 
+        y <- fitted(object)
+    else {
+        if (!is.null(object$formula)) {
+            x <- model.matrix(object$formula, newdata)
+        }
+        else {
+            x <- newdata
+        }
+        y <- as.vector(x \%*\% coef(object))
+    }
+    y
+  }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

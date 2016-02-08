@@ -1,5 +1,5 @@
-\name{linmod}
-\alias{linmod}
+\name{linmod.formula}
+\alias{linmod.formula}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 %%  ~~function to do ... ~~
@@ -8,12 +8,15 @@
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-linmod(x, ...)
+linmod.formula(formula, data = list(), ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{
-%%     ~~Describe \code{x} here~~
+  \item{formula}{
+%%     ~~Describe \code{formula} here~~
+}
+  \item{data}{
+%%     ~~Describe \code{data} here~~
 }
   \item{\dots}{
 %%     ~~Describe \code{\dots} here~~
@@ -50,8 +53,16 @@ linmod(x, ...)
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function (x, ...) 
-UseMethod("linmod")
+function (formula, data = list(), ...) 
+{
+    mf <- model.frame(formula = formula, data = data)
+    x <- model.matrix(attr(mf, "terms"), data = mf)
+    y <- model.response(mf)
+    est <- linmod.default(x, y, ...)
+    est$call <- match.call()
+    est$formula <- formula
+    est
+  }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

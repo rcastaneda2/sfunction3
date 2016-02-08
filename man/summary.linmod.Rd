@@ -1,5 +1,5 @@
-\name{linmod}
-\alias{linmod}
+\name{summary.linmod}
+\alias{summary.linmod}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 %%  ~~function to do ... ~~
@@ -8,12 +8,12 @@
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-linmod(x, ...)
+summary.linmod(object, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{
-%%     ~~Describe \code{x} here~~
+  \item{object}{
+%%     ~~Describe \code{object} here~~
 }
   \item{\dots}{
 %%     ~~Describe \code{\dots} here~~
@@ -50,8 +50,16 @@ linmod(x, ...)
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function (x, ...) 
-UseMethod("linmod")
+function (object, ...) 
+{
+    se <- sqrt(diag(object$vcov))
+    tval <- coef(object)/se
+    TAB <- cbind(Estimate = coef(object), StdErr = se, t.value = tval, 
+        p.value = 2 * pt(-abs(tval), df = object$df))
+    res <- list(call = object$call, coefficients = TAB)
+    class(res) <- "summary.linmod"
+    res
+  }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

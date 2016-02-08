@@ -1,5 +1,5 @@
-\name{linmod}
-\alias{linmod}
+\name{print.linmod}
+\alias{print.linmod}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 %%  ~~function to do ... ~~
@@ -8,7 +8,7 @@
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-linmod(x, ...)
+print.linmod(x, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -51,7 +51,12 @@ linmod(x, ...)
 
 ## The function is currently defined as
 function (x, ...) 
-UseMethod("linmod")
+{
+    cat("Call:\n")
+    print(x$call)
+    cat("\nCoefficients:\n")
+    print(x$coefficients)
+  }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

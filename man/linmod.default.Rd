@@ -1,5 +1,5 @@
-\name{linmod}
-\alias{linmod}
+\name{linmod.default}
+\alias{linmod.default}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 %%  ~~function to do ... ~~
@@ -8,12 +8,15 @@
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-linmod(x, ...)
+linmod.default(x, y, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
 %%     ~~Describe \code{x} here~~
+}
+  \item{y}{
+%%     ~~Describe \code{y} here~~
 }
   \item{\dots}{
 %%     ~~Describe \code{\dots} here~~
@@ -50,8 +53,17 @@ linmod(x, ...)
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function (x, ...) 
-UseMethod("linmod")
+function (x, y, ...) 
+{
+    x <- as.matrix(x)
+    y <- as.matrix(y)
+    est <- linmodEst(x, y)
+    est$fitted.values <- as.vector(x \%*\% est$coefficients)
+    est$residuals <- y - est$fitted.values
+    est$call <- match.call()
+    class(est) <- "linmod"
+    est
+  }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
